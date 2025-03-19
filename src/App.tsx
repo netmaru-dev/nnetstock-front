@@ -1,7 +1,9 @@
+import './common/styles/tailwind.css';
+
 function App() {
   return (
     <>
-      <h1>nnetstock</h1>
+      <h1 className="text-2xl text-(--color-primary)">nnetstock</h1>
     </>
   );
 }
