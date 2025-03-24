@@ -9,15 +9,19 @@
   * {
     @apply box-border;
   }
-  html {
-    @apply flex justify-center;
-  }
+  html,
   body {
     @apply h-full w-full;
     @apply font-Pretendard;
   }
+  html {
+    @apply flex justify-center;
+  }
+  body {
+    @apply flex h-full flex-col;
+  }
   main {
-    @apply max-w;
+    @apply flex-1 overflow-y-auto;
   }
 }
 
