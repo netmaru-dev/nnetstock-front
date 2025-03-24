@@ -13,12 +13,12 @@
     @apply flex justify-center;
   }
   body {
-    @apply h-full w-full max-w;
+    @apply h-full w-full;
     @apply font-Pretendard;
   }
-  /* html,
-  body {
-  } */
+  main {
+    @apply max-w;
+  }
 }
 
 /* html,
