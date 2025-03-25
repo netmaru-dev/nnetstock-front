@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MasterTable from './MasterTable';
 import { ColumnDef } from '@tanstack/react-table';
-import { SiteTableType } from '@/common/types/TableType';
+import { SitePageTableType } from '@/common/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/select';
 import { useState } from 'react';
 
-const exampleData: SiteTableType[] = [
+const exampleData: SitePageTableType[] = [
   { id: 1, pageName: '라이선스 소개', lastEditDate: '2025-03-06', status: true },
   { id: 2, pageName: '청소년 보호정책', lastEditDate: '2025-03-06', status: false },
   { id: 3, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
@@ -21,7 +21,7 @@ const exampleData: SiteTableType[] = [
 
 // 상태 변경용 래퍼 컴포넌트
 const StoryWrapper = () => {
-  const [tableData, setTableData] = useState<SiteTableType[]>(exampleData);
+  const [tableData, setTableData] = useState<SitePageTableType[]>(exampleData);
 
   const handleStatusChange = (rowIndex: number, newStatus: boolean) => {
     const newData = [...tableData];
@@ -29,7 +29,7 @@ const StoryWrapper = () => {
     setTableData(newData);
   };
 
-  const columns: ColumnDef<SiteTableType>[] = [
+  const columns: ColumnDef<SitePageTableType>[] = [
     {
       accessorKey: 'id',
       header: ({ column }) => (
@@ -95,7 +95,7 @@ const StoryWrapper = () => {
   return <MasterTable columns={columns} data={tableData} filter='pageName' />;
 };
 
-const meta: Meta<typeof MasterTable<SiteTableType, unknown>> = {
+const meta: Meta<typeof MasterTable<SitePageTableType, unknown>> = {
   title: 'Admin/Common/Table/MasterTable',
   component: MasterTable,
   tags: ['autodocs'],
@@ -103,7 +103,7 @@ const meta: Meta<typeof MasterTable<SiteTableType, unknown>> = {
 
 export default meta;
 
-type Story = StoryObj<typeof MasterTable<SiteTableType, unknown>>;
+type Story = StoryObj<typeof MasterTable<SitePageTableType, unknown>>;
 
 export const Default: Story = {
   render: () => <StoryWrapper />,
