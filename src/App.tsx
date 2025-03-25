@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <h1 className='text-primary text-2xl'>nnetstock admin route</h1>
+      <h1 className='text-2xl text-main'>nnetstock admin route</h1>
     </>
   );
 }

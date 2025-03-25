@@ -6,11 +6,11 @@ const AdminLayout = () => {
   return (
     <div className='flex h-screen flex-col'>
       <Header />
-      <main className='flex flex-1'>
+      <main>
         <SideMenu />
-        <div className='flex-1 p-10'>
+        <section>
           <Outlet />
-        </div>
+        </section>
       </main>
     </div>
   );

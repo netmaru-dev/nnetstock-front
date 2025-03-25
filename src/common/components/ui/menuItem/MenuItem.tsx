@@ -22,8 +22,8 @@ const MenuItem = ({ size = 'medium', label, isActive = false, onClick }: MenuIte
           'text-18': size === 'large',
         },
         'cursor-pointer',
-        'hover:text-primary',
-        isActive ? 'text-primary' : 'text-white'
+        'hover:text-main',
+        isActive ? 'text-main' : 'text-white'
       )}
       onClick={onClick}
     >

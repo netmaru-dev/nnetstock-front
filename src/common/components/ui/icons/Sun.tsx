@@ -7,7 +7,7 @@ interface SunProps {
 const Sun = ({ isActive }: SunProps) => {
   return (
     <RxSun
-      className={`flex items-center justify-center ${isActive ? 'text-primary' : 'text-white'} hover:text-primary`}
+      className={`flex items-center justify-center ${isActive ? 'text-main' : 'text-white'} hover:text-main`}
     />
   );
 };
