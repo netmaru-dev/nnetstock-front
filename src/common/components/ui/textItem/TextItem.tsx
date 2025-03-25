@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 interface TextItemProps {
   /** 텍스트 사이즈 */
-  size: 'small' | 'medium' | 'large';
+  size: 'small' | 'medium' | 'large' | 'title';
   /** 텍스트 내용 */
   label: string;
   /** 클릭 이벤트 */
@@ -31,13 +31,14 @@ const TextItem = ({
       className={clsx(
         'font-medium',
         {
-          'text-sm': size === 'small',
-          'text-base': size === 'medium',
-          'text-lg': size === 'large',
+          'text-14': size === 'small',
+          'text-16': size === 'medium',
+          'text-18': size === 'large',
+          'text-28 font-extrabold': size === 'title',
         },
         isPointer && 'cursor-pointer',
-        isHover && 'hover:text-primary',
-        isActive ? 'text-primary' : 'text-text dark:text-white',
+        isHover && 'hover:text-main',
+        isActive ? 'text-main' : 'text-text dark:text-white',
         className
       )}
       onClick={onClick}
