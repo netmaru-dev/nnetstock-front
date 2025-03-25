@@ -17,9 +17,9 @@ const MenuItem = ({ size = 'medium', label, isActive = false, onClick }: MenuIte
       className={clsx(
         'font-medium',
         {
-          'text-14': size === 'small',
-          'text-16': size === 'medium',
-          'text-18': size === 'large',
+          'text-16': size === 'small',
+          'text-18': size === 'medium',
+          'text-20': size === 'large',
         },
         'cursor-pointer',
         'hover:text-main',

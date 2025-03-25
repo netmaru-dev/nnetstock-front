@@ -7,7 +7,7 @@
 
 @layer base {
   * {
-    @apply box-border;
+    @apply box-border border-border;
   }
   html,
   body {
@@ -19,6 +19,7 @@
   }
   body {
     @apply flex h-full flex-col;
+    @apply bg-background text-foreground;
   }
   main {
     @apply flex flex-1 overflow-y-auto;
@@ -26,6 +27,7 @@
   section {
     @apply flex-1 p-16;
   }
+
   :root {
     --background: 0 0% 100%;
 
@@ -128,11 +130,10 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.ql-container {
+  height: 100%;
+}
+.ql-editor {
+  font-size: 16px;
+  padding: 2rem;
 }

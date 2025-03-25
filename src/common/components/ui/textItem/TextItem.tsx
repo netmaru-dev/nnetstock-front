@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 interface TextItemProps {
   /** 텍스트 사이즈 */
-  size: 'small' | 'medium' | 'large' | 'title';
+  size?: 'small' | 'medium' | 'large' | 'title' | 'sub-title';
   /** 텍스트 내용 */
   label: string;
   /** 클릭 이벤트 */
@@ -34,6 +34,7 @@ const TextItem = ({
           'text-14': size === 'small',
           'text-16': size === 'medium',
           'text-18': size === 'large',
+          'text-22 font-semibold': size === 'sub-title',
           'text-28 font-extrabold': size === 'title',
         },
         isPointer && 'cursor-pointer',

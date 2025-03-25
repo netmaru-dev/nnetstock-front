@@ -13,9 +13,9 @@ const PersonalMenuList = () => {
     <>
       <nav className='flex items-center gap-6 text-white'>
         <ProfileImage />
-        <TextItem size='small' label={userName} className='text-white' />
-        <MenuItem size='small' label='내 정보' />
-        <MenuItem size='small' label='로그인' />
+        <TextItem size='large' label={userName} className='text-white' />
+        <MenuItem size='medium' label='내 정보' />
+        <MenuItem size='medium' label='로그인' />
       </nav>
     </>
   );

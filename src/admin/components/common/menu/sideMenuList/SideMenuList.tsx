@@ -14,7 +14,7 @@ const SideMenuList = () => {
       {SIDE_MENU_ITEMS.map(item => (
         <MenuItem
           key={item.id}
-          size='large'
+          size='medium'
           label={item.label}
           isActive={activeIdx === item.id}
           onClick={() => setActiveIdx(item.id)}
