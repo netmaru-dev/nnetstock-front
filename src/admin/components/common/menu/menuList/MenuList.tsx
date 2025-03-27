@@ -1,29 +1,27 @@
 import { useState } from 'react';
 import MenuItem from '@/common/components/ui/menuItem/MenuItem';
-
-const MENU_ITEMS = [
-  { id: 'home', label: '홈' },
-  { id: 'stock', label: '스톡 관리' },
-  { id: 'sales', label: '판매 현황' },
-  { id: 'settlement', label: '정산 관리' },
-  { id: 'members', label: '회원 관리' },
-  { id: 'board', label: '게시판' },
-  { id: 'site', label: '사이트 관리' },
-];
+import { MENU_ITEMS } from '@/admin/constants/menu';
+import { useNavigate } from 'react-router-dom';
 
 const MenuList = () => {
   const [activeIdx, setActiveIdx] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleClick = (path: string) => {
+    setActiveIdx(path);
+    navigate(path);
+  };
 
   return (
     <nav className='flex items-center justify-center'>
       <ul className='flex select-none gap-10'>
         {MENU_ITEMS.map(item => (
           <MenuItem
-            key={item.id}
+            key={item.path}
             size='medium'
             label={item.label}
-            isActive={activeIdx === item.id}
-            onClick={() => setActiveIdx(item.id)}
+            isActive={activeIdx === item.path}
+            onClick={() => handleClick(item.path)}
           />
         ))}
       </ul>

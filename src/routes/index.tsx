@@ -1,12 +1,19 @@
 import { createBrowserRouter } from 'react-router-dom';
 import CreatorApp from '@/creator/CreatorApp';
 import PrivateRouter from './PrivateRouter';
-import DashBoardPage from '@/admin/pages/dashboard/DashboardPage';
+import DashBoardPage from '@/admin/pages/home/DashboardPage';
 import SiteManagePage from '@/admin/pages/site/SiteManagePage';
 import PageManagePage from '@/admin/pages/site/PageManagePage';
 import MainPage from '@/user/pages/main/MainPage';
 import UserApp from '@/user/UserApp';
 import AdminApp from '@/admin/AdminApp';
+import StockManagePage from '@/admin/pages/stock/StockManagePage';
+import SalesStatusPage from '@/admin/pages/sales/SalesStatusPage';
+import SettlementPage from '@/admin/pages/settlement/SettlementPage';
+import MemberManagePage from '@/admin/pages/member/MemberManagePage';
+import BoardPage from '@/admin/pages/board/BoardPage';
+import PageNewPage from '@/admin/pages/site/PageNewPage';
+import PageEditPage from '@/admin/pages/site/PageEditPage';
 
 // TODO 불필요하면 삭제
 // const RootLayout = () => {
@@ -50,19 +57,47 @@ export const router = createBrowserRouter([
             element: <DashBoardPage />,
           },
           {
-            path: 'site-manage',
+            path: 'home',
+            element: <DashBoardPage />,
+          },
+          {
+            path: 'stock',
+            element: <StockManagePage />,
+          },
+          {
+            path: 'sales',
+            element: <SalesStatusPage />,
+          },
+          {
+            path: 'settlement',
+            element: <SettlementPage />,
+          },
+          {
+            path: 'member',
+            element: <MemberManagePage />,
+          },
+          {
+            path: 'board',
+            element: <BoardPage />,
+          },
+          {
+            path: 'site',
             children: [
               {
                 index: true,
-                element: <SiteManagePage />,
-              },
-              {
-                path: 'site',
-                element: <SiteManagePage />,
-              },
-              {
-                path: 'page',
                 element: <PageManagePage />,
+              },
+              {
+                path: 'site-manage',
+                element: <SiteManagePage />,
+              },
+              {
+                path: 'page-manage',
+                children: [
+                  { index: true, element: <PageManagePage /> },
+                  { path: 'new', element: <PageNewPage /> },
+                  { path: ':pageId/edit', element: <PageEditPage /> },
+                ],
               },
             ],
           },

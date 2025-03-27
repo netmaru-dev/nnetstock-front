@@ -1,23 +1,32 @@
+import { SIDE_MENU_ITEMS } from '@/admin/constants/menu';
 import MenuItem from '@/common/components/ui/menuItem/MenuItem';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SIDE_MENU_ITEMS = [
-  { id: 'site', label: '사이트 관리' },
-  { id: 'page', label: '페이지 관리' },
-];
+interface SideMenuListProps {
+  menuKey: string;
+}
 
-const SideMenuList = () => {
+const SideMenuList = ({ menuKey }: SideMenuListProps) => {
   const [activeIdx, setActiveIdx] = useState<string | null>(null);
+  const sideMenus = SIDE_MENU_ITEMS[menuKey] ?? [];
+
+  const navigate = useNavigate();
+
+  const handleClick = (path: string) => {
+    setActiveIdx(path);
+    navigate(`${menuKey}/${path}`);
+  };
 
   return (
     <ul className='flex select-none flex-col gap-8'>
-      {SIDE_MENU_ITEMS.map(item => (
+      {sideMenus.map(item => (
         <MenuItem
-          key={item.id}
+          key={item.path}
           size='medium'
           label={item.label}
-          isActive={activeIdx === item.id}
-          onClick={() => setActiveIdx(item.id)}
+          isActive={activeIdx === item.path}
+          onClick={() => handleClick(item.path)}
         />
       ))}
     </ul>

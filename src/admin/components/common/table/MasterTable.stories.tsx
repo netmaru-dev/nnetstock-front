@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MasterTable from './MasterTable';
 import { ColumnDef } from '@tanstack/react-table';
-import { SitePageTableType } from '@/common/types/TableType';
+import { SitePageTableType } from '@/admin/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {

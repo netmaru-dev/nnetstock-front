@@ -1,5 +1,5 @@
 import MasterTable from '@/admin/components/common/table/MasterTable';
-import { SitePageTableType } from '@/common/types/TableType';
+import { SitePageTableType } from '@/admin/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
 import {
   Select,
