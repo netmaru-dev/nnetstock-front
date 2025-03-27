@@ -1,17 +1,12 @@
 import MasterTable from '@/admin/components/common/table/MasterTable';
 import { SitePageTableType } from '@/admin/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import TextItem from '@/common/components/ui/textItem/TextItem';
+import { useNavigate } from 'react-router-dom';
+import TitleTextItem from '@/common/components/ui/textItem/TitleTextItem';
+import SelectBox from '@/common/components/ui/select/SelectBox';
 
 // TODO 서버에서 데이터 가져오기
 const exampleData: SitePageTableType[] = [
@@ -33,10 +28,7 @@ const exampleData: SitePageTableType[] = [
 ];
 
 const PageManagePage = () => {
-  const handleNewPage = () => {
-    console.log('new Page');
-  };
-
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState<SitePageTableType[]>(exampleData);
 
   // 상태 변경 핸들러
@@ -68,7 +60,7 @@ const PageManagePage = () => {
     {
       accessorKey: 'pageName',
       header: '페이지명',
-      size: 300,
+      size: 500,
       // cell: ({ row }) => <span className='w-[500px]'>{row.getValue('pageName')}</span>,
       cell: ({ row }) => <div className=''>{row.getValue('pageName')}</div>,
     },
@@ -84,20 +76,16 @@ const PageManagePage = () => {
       cell: ({ row }) => {
         const value = row.getValue('status') as boolean;
         const rowIndex = row.index;
-
         return (
-          <Select
+          <SelectBox
             value={value ? 'true' : 'false'}
-            onValueChange={val => handleStatusChange(rowIndex, val === 'true')}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder='선택' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='true'>사용함</SelectItem>
-              <SelectItem value='false'>미사용</SelectItem>
-            </SelectContent>
-          </Select>
+            handleValueChange={val => handleStatusChange(rowIndex, val === 'true')}
+            options={[
+              { value: 'true', label: '사용함' },
+              { value: 'false', label: '미사용' },
+            ]}
+            placeholder='선택'
+          />
         );
       },
     },
@@ -105,9 +93,13 @@ const PageManagePage = () => {
       accessorKey: 'edit',
       header: '관리',
       size: 100,
-      cell: () => {
+      cell: ({ row }) => {
         return (
-          <Button variant='outline' size='lg'>
+          <Button
+            variant='outline'
+            size='lg'
+            onClick={() => navigate(`/admin/site/page-manage/${row.original.id}/edit`)}
+          >
             수정
           </Button>
         );
@@ -118,8 +110,8 @@ const PageManagePage = () => {
   return (
     <div className='flex flex-col gap-10'>
       <div className='flex justify-between'>
-        <TextItem size='title' label='페이지 관리' />
-        <Button onClick={handleNewPage} size='lg'>
+        <TitleTextItem label='페이지 관리' />
+        <Button onClick={() => navigate('/admin/site/page-manage/new')} size='big'>
           새 페이지
         </Button>
       </div>

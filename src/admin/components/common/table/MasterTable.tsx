@@ -114,19 +114,19 @@ const MasterTable = <TData, TValue>({ columns, data, filter }: MasterTableProps<
       <div className='flex items-center justify-end space-x-2 py-4'>
         <Button
           variant='default'
-          size='sm'
+          size='lg'
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          이전
         </Button>
         <Button
           variant='default'
-          size='sm'
+          size='lg'
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          다음
         </Button>
       </div>
     </div>
