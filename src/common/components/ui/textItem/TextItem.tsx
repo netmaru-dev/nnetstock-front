@@ -2,9 +2,9 @@ import clsx from 'clsx';
 
 interface TextItemProps {
   /** 텍스트 사이즈 */
-  size?: 'small' | 'medium' | 'large' | 'title' | 'sub-title';
-  /** 텍스트 내용 */
-  label: string;
+  size?: 'small' | 'medium' | 'large' | 'big';
+  /** 텍스트 내용 (컴포넌트도 가능)*/
+  label: React.ReactNode;
   /** 클릭 이벤트 */
   onClick?: () => void;
   /** 선택 상태 활성화 여부 */
@@ -15,6 +15,8 @@ interface TextItemProps {
   isPointer?: boolean;
   /** 클래스 네임 */
   className?: string;
+  /** 아이콘 */
+  icon?: React.ReactNode;
 }
 
 const TextItem = ({
@@ -25,6 +27,7 @@ const TextItem = ({
   isHover = false,
   isPointer = false,
   className,
+  icon,
 }: TextItemProps) => {
   return (
     <span
@@ -34,9 +37,9 @@ const TextItem = ({
           'text-14': size === 'small',
           'text-16': size === 'medium',
           'text-18': size === 'large',
-          'text-22 font-semibold': size === 'sub-title',
-          'text-28 font-extrabold': size === 'title',
+          'text-20': size === 'big',
         },
+        icon && 'flex items-center gap-3',
         isPointer && 'cursor-pointer',
         isHover && 'hover:text-main',
         isActive ? 'text-main' : 'text-text dark:text-white',
@@ -44,6 +47,7 @@ const TextItem = ({
       )}
       onClick={onClick}
     >
+      {icon}
       {label}
     </span>
   );
