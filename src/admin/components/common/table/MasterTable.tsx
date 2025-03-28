@@ -1,16 +1,4 @@
-/* shadcn/ui Components DataTable */
-
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -19,116 +7,148 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ArrowUpDown } from 'lucide-react';
+import PaginationBox from '@/common/components/ui/pagination/Pagination';
+// import { Pagination } from '@/components/ui/pagination';
 
-interface MasterTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  filter?: string; // 필터링할 컬럼 (accessorKey)
+interface Column<T> {
+  key: keyof T | string;
+  header: string;
+  width?: number;
+  sortable?: boolean;
+  render?: (item: T) => React.ReactNode;
 }
 
-const MasterTable = <TData, TValue>({ columns, data, filter }: MasterTableProps<TData, TValue>) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+interface MasterTableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  selectable?: boolean;
+  selectedItems?: T[];
+  onSelectionChange?: (items: T[]) => void;
+  onSort?: (key: keyof T | string, direction: 'asc' | 'desc') => void;
+}
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-    },
-    defaultColumn: {
-      size: 200,
-      minSize: 50,
-      maxSize: 500,
-    },
-    getPaginationRowModel: getPaginationRowModel(),
-  });
+const MasterTable = <T extends { id: number }>({
+  columns,
+  data,
+  totalCount,
+  currentPage,
+  pageSize,
+  onPageChange,
+  selectable = false,
+  selectedItems = [],
+  onSelectionChange,
+  onSort,
+}: MasterTableProps<T>) => {
+  const [sortKey, setSortKey] = useState<keyof T | string | null>(null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+
+  const handleSort = (key: keyof T | string) => {
+    if (sortKey === key) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortDirection('asc');
+    }
+    onSort?.(key, sortDirection);
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      onSelectionChange?.(data);
+    } else {
+      onSelectionChange?.([]);
+    }
+  };
+
+  const handleSelectItem = (item: T) => {
+    const isSelected = selectedItems.some(selected => selected.id === item.id);
+    if (isSelected) {
+      onSelectionChange?.(selectedItems.filter(selected => selected.id !== item.id));
+    } else {
+      onSelectionChange?.([...selectedItems, item]);
+    }
+  };
+
+  const handleItemDetail = (item: T) => {
+    console.log(item);
+  };
 
   return (
-    <div className='flex w-full flex-col gap-3'>
-      {filter && (
-        <div className='flex justify-start'>
-          <Input
-            placeholder={
-              // TODO 수정
-              // (columns.find(col => col.accessorKey === filter)?.header as string) +
-              '검색'
-            }
-            value={(table.getColumn(filter)?.getFilterValue() as string) ?? ''}
-            onChange={event => table.getColumn(filter)?.setFilterValue(event.target.value)}
-            className='mb-3 w-96 min-w-60 py-6'
-          />
-        </div>
-      )}
-      <div className='w-full rounded-md border'>
-        <Table className='table-auto'>
+    <div className='flex flex-col gap-10'>
+      <div>
+        <Table>
           <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <TableHead
-                    key={header.id}
-                    style={{
-                      width: `${header.getSize()}px`,
-                      borderBottom: '1px solid #cbcbcb',
-                    }}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
+            <TableRow>
+              {selectable && (
+                <TableHead className='w-[50px]'>
+                  <Checkbox
+                    checked={selectedItems.length === data.length}
+                    onCheckedChange={handleSelectAll}
+                  />
+                </TableHead>
+              )}
+              {columns.map(column => (
+                <TableHead
+                  key={String(column.key)}
+                  style={{ width: column.width ? `${column.width}px` : 'auto' }}
+                  className={` ${column.sortable ? 'cursor-pointer select-none' : ''}`}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                >
+                  <div className='flex items-center gap-2'>
+                    {column.header}
+                    {column.sortable && (
+                      <ArrowUpDown
+                        className={`h-4 w-4 ${
+                          sortKey === column.key ? 'text-primary' : 'text-muted-foreground'
+                        }`}
+                      />
+                    )}
+                  </div>
+                </TableHead>
+              ))}
+            </TableRow>
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map(row => (
-                <TableRow key={row.id} style={{ borderBottom: '1px solid #e0e0e0' }}>
-                  {row.getVisibleCells().map(cell => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            {data.length > 0 ? (
+              data.map(item => (
+                <TableRow key={item.id} onClick={() => handleItemDetail(item)}>
+                  {selectable && (
+                    <TableCell>
+                      <Checkbox
+                        checked={selectedItems.some(selected => selected.id === item.id)}
+                        onCheckedChange={() => handleSelectItem(item)}
+                      />
+                    </TableCell>
+                  )}
+                  {columns.map(column => (
+                    <TableCell key={String(column.key)}>
+                      {column.render ? column.render(item) : String(item[column.key as keyof T])}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  해당 데이터가 없습니다.
+                <TableCell colSpan={selectable ? columns.length + 1 : columns.length}>
+                  데이터가 없습니다.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button
-          variant='default'
-          size='lg'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          이전
-        </Button>
-        <Button
-          variant='default'
-          size='lg'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          다음
-        </Button>
-      </div>
+      <PaginationBox
+        currentPage={currentPage}
+        totalCount={totalCount}
+        pageSize={pageSize}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 };
