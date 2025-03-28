@@ -14,6 +14,7 @@ import MemberManagePage from '@/admin/pages/member/MemberManagePage';
 import BoardPage from '@/admin/pages/board/BoardPage';
 import PageNewPage from '@/admin/pages/site/PageNewPage';
 import PageEditPage from '@/admin/pages/site/PageEditPage';
+import MemberDetailPage from '@/admin/pages/member/MemberDetailPage';
 
 // TODO 불필요하면 삭제
 // const RootLayout = () => {
@@ -74,7 +75,20 @@ export const router = createBrowserRouter([
           },
           {
             path: 'member',
-            element: <MemberManagePage />,
+            children: [
+              {
+                index: true,
+                element: <MemberManagePage />,
+              },
+              {
+                path: 'list',
+                element: <MemberManagePage />,
+              },
+              {
+                path: 'detail',
+                element: <MemberDetailPage />,
+              },
+            ],
           },
           {
             path: 'board',
