@@ -15,8 +15,8 @@ interface PageFormProps {
   version?: string;
   setVersion?: (value: string) => void;
   versionOptions?: { value: string; label: string }[];
-  onSave: () => void;
-  onCancel: () => void;
+  handleSave: () => void;
+  handleCancel: () => void;
 }
 
 const PageForm = ({
@@ -30,8 +30,8 @@ const PageForm = ({
   version,
   setVersion,
   versionOptions,
-  onSave,
-  onCancel,
+  handleSave,
+  handleCancel,
 }: PageFormProps) => {
   return (
     <div className='flex flex-col gap-16'>
@@ -59,7 +59,7 @@ const PageForm = ({
           versionOptions={versionOptions}
         />
         <PageContentSection value={value} setValue={setValue} />
-        <ButtonContainer onSave={onSave} onCancel={onCancel} />
+        <ButtonContainer handleSave={handleSave} handleCancel={handleCancel} />
       </div>
     </div>
   );

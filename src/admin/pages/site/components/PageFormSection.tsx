@@ -1,4 +1,4 @@
-import InputWithLabel from '@/common/components/ui/inputWithLabel/InputWithLabel';
+import InputWithLabel from '@/common/components/ui/input/inputWithLabel/InputWithLabel';
 import TextItem from '@/common/components/ui/textItem/TextItem';
 import SelectBox from '@/common/components/ui/select/SelectBox';
 import { GoDotFill } from 'react-icons/go';
@@ -27,14 +27,14 @@ const PageFormSection = ({
   return (
     <div className='flex w-full max-w-2xl flex-col'>
       <InputWithLabel
-        text='페이지 제목'
+        label='페이지 제목'
         id='page-title'
         placeholder='제목을 입력하세요.'
         value={pageTitle}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPageTitle(e.target.value)}
       />
       <InputWithLabel
-        text='영문 아이디'
+        label='영문 아이디'
         id='english-id'
         placeholder='입력하신 영문 아이디가 해당 페이지의 주소가 됩니다.'
         value={englishId}

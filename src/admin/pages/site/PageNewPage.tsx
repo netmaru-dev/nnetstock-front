@@ -17,11 +17,11 @@ const PageNewPage = () => {
       setEnglishId={setEnglishId}
       value={value}
       setValue={setValue}
-      onSave={() => {
+      handleSave={() => {
         // TODO: API 호출하여 새 페이지 생성
         navigate('/admin/site/page-manage');
       }}
-      onCancel={() => navigate(-1)}
+      handleCancel={() => navigate(-1)}
     />
   );
 };

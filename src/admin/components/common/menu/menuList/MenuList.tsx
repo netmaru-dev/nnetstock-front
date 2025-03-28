@@ -21,7 +21,7 @@ const MenuList = () => {
             size='medium'
             label={item.label}
             isActive={activeIdx === item.path}
-            onClick={() => handleClick(item.path)}
+            handleClick={() => handleClick(item.path)}
           />
         ))}
       </ul>

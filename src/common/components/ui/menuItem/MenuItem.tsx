@@ -8,10 +8,10 @@ interface MenuItemProps {
   /** 활성화 여부 */
   isActive?: boolean;
   /** 클릭 이벤트 */
-  onClick?: () => void;
+  handleClick?: () => void;
 }
 
-const MenuItem = ({ size = 'medium', label, isActive = false, onClick }: MenuItemProps) => {
+const MenuItem = ({ size = 'medium', label, isActive = false, handleClick }: MenuItemProps) => {
   return (
     <li
       className={clsx(
@@ -25,7 +25,7 @@ const MenuItem = ({ size = 'medium', label, isActive = false, onClick }: MenuIte
         'hover:text-main',
         isActive ? 'text-main' : 'text-white'
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {label}
     </li>

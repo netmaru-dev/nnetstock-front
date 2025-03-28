@@ -37,11 +37,11 @@ const PageEditPage = () => {
       value={value}
       setValue={setValue}
       versionOptions={versionOptions}
-      onSave={() => {
+      handleSave={() => {
         // TODO: API 호출하여 페이지 수정
         navigate('/admin/site/page-manage');
       }}
-      onCancel={() => navigate(-1)}
+      handleCancel={() => navigate(-1)}
     />
   );
 };

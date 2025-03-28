@@ -1,4 +1,4 @@
-import MasterTable from '@/admin/components/common/table/MasterTable';
+import StepPaginatedTable from '@/admin/components/common/table/StepPaginatedTable';
 import { SitePageTableType } from '@/admin/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
@@ -116,7 +116,7 @@ const PageManagePage = () => {
         </Button>
       </div>
       <div className='flex flex-col'>
-        <MasterTable columns={Columns} data={exampleData} filter={'pageName'} />
+        <StepPaginatedTable columns={Columns} data={exampleData} filter={'pageName'} />
       </div>
     </div>
   );

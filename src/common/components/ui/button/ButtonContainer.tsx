@@ -1,18 +1,22 @@
 import { Button } from '@/components/ui/button';
 
 interface ButtonContainerProps {
-  onSave: () => void;
-  onCancel: () => void;
+  handleSave: () => void;
+  handleCancel: () => void;
   isSaveDisabled?: boolean;
 }
 
-const ButtonContainer = ({ onSave, onCancel, isSaveDisabled = false }: ButtonContainerProps) => {
+const ButtonContainer = ({
+  handleSave,
+  handleCancel,
+  isSaveDisabled = false,
+}: ButtonContainerProps) => {
   return (
     <div className='mt-6 flex justify-center gap-5'>
-      <Button onClick={onSave} disabled={isSaveDisabled} size='big'>
+      <Button onClick={handleSave} disabled={isSaveDisabled} size='big'>
         저장
       </Button>
-      <Button variant='secondary' onClick={onCancel} size='big'>
+      <Button variant='secondary' onClick={handleCancel} size='big'>
         취소
       </Button>
     </div>

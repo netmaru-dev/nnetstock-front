@@ -6,7 +6,7 @@ interface TextItemProps {
   /** 텍스트 내용 (컴포넌트도 가능)*/
   label: React.ReactNode;
   /** 클릭 이벤트 */
-  onClick?: () => void;
+  handleClick?: () => void;
   /** 선택 상태 활성화 여부 */
   isActive?: boolean;
   /** hover 활성화 여부 */
@@ -22,7 +22,7 @@ interface TextItemProps {
 const TextItem = ({
   size = 'medium',
   label,
-  onClick,
+  handleClick,
   isActive = false,
   isHover = false,
   isPointer = false,
@@ -45,7 +45,7 @@ const TextItem = ({
         isActive ? 'text-main' : 'text-text dark:text-white',
         className
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {icon}
       {label}
