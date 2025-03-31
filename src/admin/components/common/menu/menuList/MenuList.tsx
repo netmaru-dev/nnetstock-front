@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import MenuItem from '@/common/components/ui/menuItem/MenuItem';
 import { MENU_ITEMS } from '@/admin/constants/menu';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useMenuStore } from '@/admin/store/menuStore';
 
 const MenuList = () => {
-  const [activeIdx, setActiveIdx] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { activeMenuPath, setActiveMenuPath, initializeFromUrl } = useMenuStore();
+
+  useEffect(() => {
+    initializeFromUrl(location.pathname);
+  }, [location.pathname, initializeFromUrl]);
 
   const handleClick = (path: string) => {
-    setActiveIdx(path);
+    setActiveMenuPath(path);
     navigate(path);
   };
 
@@ -20,7 +26,7 @@ const MenuList = () => {
             key={item.path}
             size='medium'
             label={item.label}
-            isActive={activeIdx === item.path}
+            isActive={activeMenuPath === item.path}
             handleClick={() => handleClick(item.path)}
           />
         ))}

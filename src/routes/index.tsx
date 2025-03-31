@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import CreatorApp from '@/creator/CreatorApp';
 import PrivateRouter from './PrivateRouter';
 import DashBoardPage from '@/admin/pages/home/DashboardPage';
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <DashBoardPage />,
+            element: <Navigate to='home' replace />,
           },
           {
             path: 'home',
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <MemberManagePage />,
+                element: <Navigate to='list' replace />,
               },
               {
                 path: 'list',
@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <PageManagePage />,
+                element: <Navigate to='page-manage' replace />,
               },
               {
                 path: 'site-manage',
