@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { SIDE_MENU_ITEMS } from '@/admin/constants/menu';
 import MenuItem from '@/common/components/ui/menuItem/MenuItem';
 import { useNavigate } from 'react-router-dom';
-import { useMenuStore } from '@/admin/store/menuStore';
+import { useMenuStore } from '@/admin/stores/menuStore';
 
 interface SideMenuListProps {
   menuKey: string;
@@ -21,7 +21,7 @@ const SideMenuList = ({ menuKey }: SideMenuListProps) => {
   };
 
   return (
-    <ul className='flex select-none flex-col gap-8'>
+    <ul className='flex flex-col gap-8 select-none'>
       {sideMenus.map(item => (
         <MenuItem
           key={item.path}

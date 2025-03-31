@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import MenuItem from '@/common/components/ui/menuItem/MenuItem';
 import { MENU_ITEMS } from '@/admin/constants/menu';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useMenuStore } from '@/admin/store/menuStore';
+import { useMenuStore } from '@/admin/stores/menuStore';
 
 const MenuList = () => {
   const navigate = useNavigate();
