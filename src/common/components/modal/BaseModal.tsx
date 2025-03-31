@@ -1,39 +1,20 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useModalStore } from '@/admin/stores/modalStore';
 
-interface InputModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  // triggerText: string;
-  title?: string;
-  description?: string;
-  children: React.ReactNode;
+interface BaseModalProps {
+  description: string;
 }
 
-const BaseModal = ({
-  open,
-  onOpenChange,
-  // triggerText,
-  title,
-  description,
-  children,
-}: InputModalProps) => {
+const BaseModal = ({ description }: BaseModalProps) => {
+  const { open, title, closeModal } = useModalStore();
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* <DialogTrigger asChild>
-        <Button size='lg'>{triggerText}</Button>
-      </DialogTrigger> */}
-      <DialogContent className='sm:max-w-[300px]'>
+    <Dialog open={open} onOpenChange={closeModal}>
+      <DialogContent className='py-10 sm:max-w-[350px]'>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        {children}
+        <div className='text-center whitespace-pre-line'>{description}</div>
       </DialogContent>
     </Dialog>
   );
