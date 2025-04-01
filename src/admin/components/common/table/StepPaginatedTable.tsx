@@ -58,22 +58,24 @@ const StepPaginatedTable = <TData, TValue>({
   });
 
   return (
-    <div className='flex w-full flex-col gap-3'>
+    <div className='flex flex-col w-full gap-3'>
       {filter && (
         <div className='flex justify-start'>
           <Input
             placeholder={
-              // TODO 수정
-              // (columns.find(col => col.accessorKey === filter)?.header as string) +
-              '검색'
+              (columns.find(
+                col =>
+                  (col as ColumnDef<TData, TValue> & { accessorKey?: string }).accessorKey ===
+                  filter
+              )?.header as string) + ' 검색'
             }
             value={(table.getColumn(filter)?.getFilterValue() as string) ?? ''}
             onChange={event => table.getColumn(filter)?.setFilterValue(event.target.value)}
-            className='mb-3 w-96 min-w-60 py-6'
+            className='py-5 mb-3 w-96 min-w-60'
           />
         </div>
       )}
-      <div className='w-full rounded-md border'>
+      <div className='w-full border rounded-md'>
         <Table className='table-auto'>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
@@ -115,7 +117,7 @@ const StepPaginatedTable = <TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className='flex items-center justify-end space-x-2 py-4'>
+      <div className='flex items-center justify-end py-4 space-x-2'>
         <Button
           variant='default'
           size='lg'

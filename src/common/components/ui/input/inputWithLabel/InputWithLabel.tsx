@@ -12,6 +12,7 @@ interface InputWithLabelProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   icon?: boolean;
   className?: string;
+  disabled?: boolean;
 }
 
 const InputWithLabel = ({
@@ -23,6 +24,7 @@ const InputWithLabel = ({
   onChange,
   icon = true,
   className,
+  disabled,
 }: InputWithLabelProps) => {
   return (
     <div className='flex items-center pb-4'>
@@ -37,6 +39,7 @@ const InputWithLabel = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          disabled={disabled}
         />
       </div>
     </div>

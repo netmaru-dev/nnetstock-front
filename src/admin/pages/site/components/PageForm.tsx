@@ -10,11 +10,12 @@ interface PageFormProps {
   setPageTitle: (value: string) => void;
   englishId: string;
   setEnglishId: (value: string) => void;
-  value: string;
-  setValue: (value: string) => void;
+  contents: string;
+  setContents: (value: string) => void;
   version?: string;
   setVersion?: (value: string) => void;
   versionOptions?: { value: string; label: string }[];
+
   handleSave: () => void;
   handleCancel: () => void;
 }
@@ -25,11 +26,12 @@ const PageForm = ({
   setPageTitle,
   englishId,
   setEnglishId,
-  value,
-  setValue,
+  contents,
+  setContents,
   version,
   setVersion,
   versionOptions,
+
   handleSave,
   handleCancel,
 }: PageFormProps) => {
@@ -39,7 +41,7 @@ const PageForm = ({
         label={
           <>
             페이지 관리
-            <span className='mx-1 inline-block'>
+            <span className='inline-block mx-1'>
               <ArrowRight />
             </span>
             {mode === 'edit' ? '내용 수정' : '새 페이지'}
@@ -58,7 +60,7 @@ const PageForm = ({
           setVersion={setVersion}
           versionOptions={versionOptions}
         />
-        <PageContentSection value={value} setValue={setValue} />
+        <PageContentSection contents={contents} setContents={setContents} />
         <ButtonContainer handleSave={handleSave} handleCancel={handleCancel} />
       </div>
     </div>

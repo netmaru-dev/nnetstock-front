@@ -2,6 +2,7 @@ import InputWithLabel from '@/common/components/ui/input/inputWithLabel/InputWit
 import TextItem from '@/common/components/ui/textItem/TextItem';
 import SelectBox from '@/common/components/ui/select/SelectBox';
 import { GoDotFill } from 'react-icons/go';
+import { convertOnlyEnglish, convertOnlyText } from '@/common/utils/convertString';
 
 interface PageFormSectionProps {
   mode: 'edit' | 'new';
@@ -24,6 +25,14 @@ const PageFormSection = ({
   setVersion,
   versionOptions,
 }: PageFormSectionProps) => {
+  const handleEnglishIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEnglishId(convertOnlyEnglish(e.target.value));
+  };
+
+  const handlePageTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageTitle(convertOnlyText(e.target.value));
+  };
+
   return (
     <div className='flex w-full max-w-2xl flex-col'>
       <InputWithLabel
@@ -31,16 +40,18 @@ const PageFormSection = ({
         id='page-title'
         placeholder='제목을 입력하세요.'
         value={pageTitle}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPageTitle(e.target.value)}
+        onChange={handlePageTitleChange}
+        disabled={mode === 'edit'}
       />
       <InputWithLabel
         label='영문 아이디'
         id='english-id'
         placeholder='입력하신 영문 아이디가 해당 페이지의 주소가 됩니다.'
         value={englishId}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEnglishId(e.target.value)}
+        onChange={handleEnglishIdChange}
+        disabled={mode === 'edit'}
       />
-      {mode === 'edit' && version && setVersion && versionOptions && (
+      {mode === 'edit' && (
         <div className='flex w-full flex-col'>
           <div className='flex h-10 items-center'>
             <div className='flex w-40 min-w-[100px] items-start'>
@@ -48,9 +59,9 @@ const PageFormSection = ({
             </div>
             <div className='flex-1'>
               <SelectBox
-                value={version}
-                handleValueChange={setVersion}
-                options={versionOptions}
+                value={version!}
+                handleValueChange={setVersion!}
+                options={versionOptions!}
                 placeholder='버전 선택'
               />
             </div>

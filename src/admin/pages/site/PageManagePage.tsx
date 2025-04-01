@@ -2,46 +2,77 @@ import StepPaginatedTable from '@/admin/components/common/table/StepPaginatedTab
 import { SitePageTableType } from '@/admin/types/TableType';
 import { ArrowUpDown } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import TitleTextItem from '@/common/components/ui/textItem/TitleTextItem';
 import SelectBox from '@/common/components/ui/select/SelectBox';
-
-// TODO 서버에서 데이터 가져오기
-const exampleData: SitePageTableType[] = [
-  { id: 1, pageName: '라이선스 소개', lastEditDate: '2025-03-06', status: true },
-  { id: 2, pageName: '청소년 보호정책', lastEditDate: '2025-03-06', status: true },
-  { id: 3, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 4, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 5, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 6, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 7, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 8, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 9, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 10, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 11, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 12, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 13, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 14, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-  { id: 15, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
-];
+import { STATUS, STATUS_LABEL } from '@/admin/constants/common';
+import { usePages, useUpdatePageStatus } from '@/admin/hooks/queries/useSiteQueries';
+import Loading from '@/common/components/ui/loading/Loading';
+import { useModalStore } from '@/admin/stores/modalStore';
 
 const PageManagePage = () => {
   const navigate = useNavigate();
-  const [tableData, setTableData] = useState<SitePageTableType[]>(exampleData);
+  const { openModal } = useModalStore();
+  const [tableData, setTableData] = useState<SitePageTableType[]>([]);
+  const { data: pages, isLoading, isError, error } = usePages();
+  const updatePageStatus = useUpdatePageStatus();
 
-  // 상태 변경 핸들러
-  const handleStatusChange = (rowIndex: number, newStatus: boolean) => {
+  // 페이지 목록 조회
+  useEffect(() => {
+    if (isError) {
+      openModal('안내', '페이지 목록 조회 중 오류가 발생했습니다.');
+      console.error('페이지 목록 조회 오류:', error);
+      return;
+    }
+
+    if (pages) {
+      const formattedData = pages.map(page => ({
+        no: page.no,
+        pageId: page.id,
+        title: page.title,
+        lastDate: page.lastDate,
+        status: STATUS_LABEL[page.status],
+      }));
+      setTableData(formattedData);
+    }
+    if (isError) {
+      openModal('안내', '페이지 목록 조회 중 오류가 발생했습니다.');
+    }
+  }, [pages, isError, error, openModal]);
+
+  // 페이지 상태 변경 핸들러
+  const handleValueChange = (val: string, rowIndex: number, pageId: string) => {
     const newData = [...tableData];
-    newData[rowIndex].status = newStatus;
+    newData[rowIndex].status = STATUS_LABEL[val];
     setTableData(newData);
+
+    updatePageStatus.mutate(
+      {
+        pageId: pageId,
+        status: Number(val),
+      },
+      {
+        onSuccess: () => {
+          openModal('안내', '페이지 상태 변경이 완료되었습니다.');
+        },
+        onError: () => {
+          openModal('안내', '페이지 상태 변경 중 오류가 발생했습니다.');
+          // 에러 발생 시 이전 상태로 되돌리기
+          const prevData = [...tableData];
+          prevData[rowIndex].status =
+            STATUS_LABEL[val === STATUS.ACTIVE ? STATUS.INACTIVE : STATUS.ACTIVE];
+          setTableData(prevData);
+        },
+      }
+    );
   };
 
-  // 컬럼 정의
+  // 테이블 컬럼 정의
   const Columns: ColumnDef<SitePageTableType>[] = [
     {
-      accessorKey: 'id',
+      accessorKey: 'no',
       enableResizing: true,
       size: 100,
       header: ({ column }) => {
@@ -51,38 +82,37 @@ const PageManagePage = () => {
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             No.
-            <ArrowUpDown className='ml-2 h-4 w-4' />
+            <ArrowUpDown className='w-4 h-4 ml-2' />
           </Button>
         );
       },
-      cell: ({ row }) => <div className=''>{row.getValue('id')}</div>,
+      cell: ({ row }) => <div className=''>{row.getValue('no')}</div>,
     },
     {
-      accessorKey: 'pageName',
+      accessorKey: 'title',
       header: '페이지명',
       size: 500,
-      // cell: ({ row }) => <span className='w-[500px]'>{row.getValue('pageName')}</span>,
-      cell: ({ row }) => <div className=''>{row.getValue('pageName')}</div>,
+      cell: ({ row }) => <div className=''>{row.getValue('title')}</div>,
     },
     {
-      accessorKey: 'lastEditDate',
+      accessorKey: 'lastDate',
       header: '최종 작성일',
-      cell: ({ row }) => <div>{row.getValue('lastEditDate')}</div>,
+      cell: ({ row }) => <div>{row.getValue('lastDate')}</div>,
     },
     {
       accessorKey: 'status',
       header: '상태',
       size: 100,
       cell: ({ row }) => {
-        const value = row.getValue('status') as boolean;
+        const value = row.getValue('status') as string;
         const rowIndex = row.index;
         return (
           <SelectBox
-            value={value ? 'true' : 'false'}
-            handleValueChange={val => handleStatusChange(rowIndex, val === 'true')}
+            value={value}
+            handleValueChange={val => handleValueChange(val, rowIndex, row.original.pageId)}
             options={[
-              { value: 'true', label: '사용함' },
-              { value: 'false', label: '미사용' },
+              { value: STATUS.INACTIVE, label: STATUS_LABEL[STATUS.INACTIVE] },
+              { value: STATUS.ACTIVE, label: STATUS_LABEL[STATUS.ACTIVE] },
             ]}
             placeholder='선택'
           />
@@ -98,7 +128,7 @@ const PageManagePage = () => {
           <Button
             variant='outline'
             size='lg'
-            onClick={() => navigate(`/admin/site/page-manage/${row.original.id}/edit`)}
+            onClick={() => navigate(`/admin/site/page-manage/edit/${row.original.pageId}`)}
           >
             수정
           </Button>
@@ -107,16 +137,20 @@ const PageManagePage = () => {
     },
   ];
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className='flex flex-col gap-10'>
       <div className='flex justify-between'>
         <TitleTextItem label='페이지 관리' />
-        <Button onClick={() => navigate('/admin/site/page-manage/new')} size='big'>
+        <Button onClick={() => navigate('/admin/site/page-manage/new')} size='lg'>
           새 페이지
         </Button>
       </div>
       <div className='flex flex-col'>
-        <StepPaginatedTable columns={Columns} data={exampleData} filter={'pageName'} />
+        <StepPaginatedTable columns={Columns} data={tableData} filter={'title'} />
       </div>
     </div>
   );

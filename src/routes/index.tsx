@@ -53,6 +53,10 @@ export const router = createBrowserRouter([
           </PrivateRouter>
         ),
         children: [
+          // {
+          //   path: 'login',
+          //   element: <LoginPage />,
+          // },
           {
             index: true,
             element: <Navigate to='home' replace />,
@@ -110,7 +114,7 @@ export const router = createBrowserRouter([
                 children: [
                   { index: true, element: <PageManagePage /> },
                   { path: 'new', element: <PageNewPage /> },
-                  { path: ':pageId/edit', element: <PageEditPage /> },
+                  { path: 'edit/:pageId', element: <PageEditPage /> },
                 ],
               },
             ],
