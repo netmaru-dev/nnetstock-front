@@ -30,6 +30,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "framer-motion": "^12.6.3",
     "lucide-react": "^0.483.0",
     "postcss": "^8.5.3",
     "quill-better-table": "^1.2.10",
