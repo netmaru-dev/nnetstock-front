@@ -2,7 +2,7 @@ export const MENU_ITEMS = [
   { path: 'home', label: '홈' },
   { path: 'stock', label: '스톡 관리' },
   { path: 'sales', label: '판매 현황' },
-  { path: 'settlement', label: '정산 관리' },
+  { path: 'account', label: '정산 관리' },
   { path: 'member', label: '회원 관리' },
   { path: 'board', label: '게시판' },
   { path: 'site', label: '사이트 관리' },
@@ -22,7 +22,7 @@ export const SIDE_MENU_ITEMS: Record<string, { path: string; label: string }[]> 
     { path: 'manage', label: '판매 관리' },
     { path: 'ranking', label: '판매 순위' },
   ],
-  settlement: [{ path: 'history', label: '정산 내역' }],
+  account: [{ path: 'list', label: '정산 내역' }],
   member: [{ path: 'list', label: '회원 관리' }],
   board: [
     { path: 'board-manage', label: '게시판 관리' },

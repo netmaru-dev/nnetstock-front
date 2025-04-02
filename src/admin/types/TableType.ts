@@ -28,3 +28,18 @@ export type UserTableType = {
   // 최근 로그인
   lastLogin: string;
 };
+
+export type AccountTableType = {
+  // 번호
+  id: number;
+  // 이름
+  name: string;
+  // 아이디
+  userId: string;
+  // 정산 예정일
+  accountDate: string;
+  // 정산 금액
+  account: number;
+  // 상태
+  status: string;
+};

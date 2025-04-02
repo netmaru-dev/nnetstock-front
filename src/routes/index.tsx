@@ -9,12 +9,12 @@ import UserApp from '@/user/UserApp';
 import AdminApp from '@/admin/AdminApp';
 import StockManagePage from '@/admin/pages/stock/StockManagePage';
 import SalesStatusPage from '@/admin/pages/sales/SalesStatusPage';
-import SettlementPage from '@/admin/pages/settlement/SettlementPage';
 import MemberManagePage from '@/admin/pages/member/MemberManagePage';
 import BoardPage from '@/admin/pages/board/BoardPage';
 import PageNewPage from '@/admin/pages/site/PageNewPage';
 import PageEditPage from '@/admin/pages/site/PageEditPage';
 import MemberDetailPage from '@/admin/pages/member/MemberDetailPage';
+import AccountListPage from '@/admin/pages/account/AccountListPage';
 
 // TODO 불필요하면 삭제
 // const RootLayout = () => {
@@ -74,8 +74,17 @@ export const router = createBrowserRouter([
             element: <SalesStatusPage />,
           },
           {
-            path: 'settlement',
-            element: <SettlementPage />,
+            path: 'account',
+            children: [
+              {
+                index: true,
+                element: <Navigate to='list' replace />,
+              },
+              {
+                path: 'list',
+                element: <AccountListPage />,
+              },
+            ],
           },
           {
             path: 'member',
