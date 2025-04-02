@@ -5,12 +5,17 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-const AccordionList = () => {
+interface AccordionListProps {
+  title: string;
+  content: string;
+}
+
+const AccordionList = ({ title, content }: AccordionListProps) => {
   return (
     <Accordion type='single' collapsible>
       <AccordionItem value='item-1'>
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+        <AccordionTrigger>{title}</AccordionTrigger>
+        <AccordionContent>{content}</AccordionContent>
       </AccordionItem>
     </Accordion>
   );

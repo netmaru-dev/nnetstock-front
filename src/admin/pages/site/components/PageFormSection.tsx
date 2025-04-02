@@ -34,7 +34,7 @@ const PageFormSection = ({
   };
 
   return (
-    <div className='flex w-full max-w-2xl flex-col'>
+    <div className='flex flex-col w-full max-w-2xl'>
       <InputWithLabel
         label='페이지 제목'
         id='page-title'
@@ -42,6 +42,7 @@ const PageFormSection = ({
         value={pageTitle}
         onChange={handlePageTitleChange}
         disabled={mode === 'edit'}
+        className='min-w-[160px]'
       />
       <InputWithLabel
         label='영문 아이디'
@@ -50,10 +51,11 @@ const PageFormSection = ({
         value={englishId}
         onChange={handleEnglishIdChange}
         disabled={mode === 'edit'}
+        className='min-w-[160px]'
       />
       {mode === 'edit' && (
-        <div className='flex w-full flex-col'>
-          <div className='flex h-10 items-center'>
+        <div className='flex flex-col w-full'>
+          <div className='flex items-center h-10'>
             <div className='flex w-40 min-w-[100px] items-start'>
               <TextItem label='버전' size='big' icon={<GoDotFill />} />
             </div>

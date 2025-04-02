@@ -5,13 +5,13 @@ import PersonalMenuList from '../common/menu/personalMenuList/PersonalMenuList';
 
 const Header = () => {
   return (
-    <header className='flex h-24 justify-between bg-bg_night px-8 py-0'>
+    <header className='flex justify-between h-24 px-8 py-0 bg-bg_night'>
       <div className='flex items-center gap-16'>
         <Logo />
         <MenuList />
       </div>
       <div className='flex gap-6'>
-        <ModeList />
+        {/* <ModeList /> */}
         <PersonalMenuList />
       </div>
     </header>

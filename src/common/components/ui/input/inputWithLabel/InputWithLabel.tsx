@@ -28,7 +28,7 @@ const InputWithLabel = ({
 }: InputWithLabelProps) => {
   return (
     <div className='flex items-center pb-4'>
-      <div className={`flex min-w-[160px] ${className}`}>
+      <div className={`flex min-w-[100px] ${className}`}>
         <Label htmlFor={id} text={label} size={labelSize} icon={icon && <GoDotFill />} />
       </div>
       <div className='flex-1'>
