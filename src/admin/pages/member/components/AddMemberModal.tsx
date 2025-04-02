@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import InputWithButton from '@/common/components/ui/input/InputWithButton/InputWithButton';
+import InputWithButton from '@/common/components/ui/input/inputWithButton/InputWithButton';
 import InputWithLabel from '@/common/components/ui/input/inputWithLabel/InputWithLabel';
 import { Checkbox } from '@/components/ui/checkbox';
 import Label from '@/common/components/ui/label/Label';
@@ -71,7 +71,7 @@ const AddMemberModal = ({
               htmlFor='author'
               text='작가 여부'
               size='small'
-              className='min-w-[160px] justify-center'
+              className='min-w-[100px] justify-center'
             />
             <Checkbox id='author' />
           </div>

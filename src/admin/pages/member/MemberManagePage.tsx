@@ -1,16 +1,16 @@
 import MasterTable from '@/admin/components/common/table/MasterTable';
 import TitleTextItem from '@/common/components/ui/textItem/TitleTextItem';
-
 import { UserTableType } from '@/admin/types/TableType';
 import SelectBox from '@/common/components/ui/select/SelectBox';
-import InputWithButton from '@/common/components/ui/input/InputWithButton/InputWithButton';
+import InputWithButton from '@/common/components/ui/input/inputWithButton/InputWithButton';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { MdPublishedWithChanges } from 'react-icons/md';
 import Loading from '@/common/components/ui/loading/Loading';
 import AddMemberModal from '@/admin/pages/member/components/AddMemberModal';
 import { MEMBER_GRADE } from '@/admin/constants/member';
-import BaseModal from '@/common/components/modal/BaseModal';
+import { useModalStore } from '@/admin/stores/modalStore';
+import { PAGE_NUM, PAGE_SIZE } from '@/admin/constants/common';
 
 const MOCKUP_DATA: Pick<
   UserTableType,
@@ -114,17 +114,18 @@ const MOCKUP_DATA: Pick<
   },
 ];
 
+// TODO 테이블 컬럼 별도 정의 필요
 const columns = [
   {
     key: 'id',
     header: 'No.',
-    sortable: true,
+    // sortable: true,
     width: 200,
   },
   {
     key: 'name',
     header: '이름',
-    sortable: true,
+    // sortable: true,
   },
   {
     key: 'userId',
@@ -141,13 +142,12 @@ const columns = [
   {
     key: 'joinDate',
     header: '가입일',
-    sortable: true,
+    // sortable: true,
   },
 ];
 
 const MemberManagePage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(PAGE_NUM);
   const [selectedItems, setSelectedItems] = useState<UserTableType[]>([]);
   const [tableData, setTableData] = useState<UserTableType[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -155,8 +155,8 @@ const MemberManagePage = () => {
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [filterGrade, setFilterGrade] = useState('');
   const [changeGrade, setChangeGrade] = useState('');
-  const [isBaseModalOpen, setIsBaseModalOpen] = useState(false);
-  const [baseModalContent, setBaseModalContent] = useState('');
+
+  const { openModal } = useModalStore();
   const [searchInput, setSearchInput] = useState('');
 
   // API 호출 함수
@@ -183,8 +183,8 @@ const MemberManagePage = () => {
 
   // 초기 데이터 로드
   useEffect(() => {
-    fetchMembers(currentPage, pageSize);
-  }, [currentPage, pageSize]);
+    fetchMembers(currentPage, PAGE_SIZE);
+  }, [currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -202,14 +202,12 @@ const MemberManagePage = () => {
   const handleChangeGrade = () => {
     // 선택된 회원들의 등급 변경 로직
     if (selectedItems.length === 0) {
-      setIsBaseModalOpen(true);
-      setBaseModalContent('선택된 회원이 없습니다.');
+      openModal('안내', '선택된 회원이 없습니다.');
       return;
     }
 
     if (!changeGrade) {
-      setIsBaseModalOpen(true);
-      setBaseModalContent('변경할 등급을 선택해주세요.');
+      openModal('안내', '변경할 등급을 선택해주세요.');
       return;
     }
 
@@ -224,8 +222,7 @@ const MemberManagePage = () => {
 
   const handleSearch = () => {
     if (!filterGrade && !searchInput) {
-      setIsBaseModalOpen(true);
-      setBaseModalContent('검색어 또는 회원등급을 선택해주세요.');
+      openModal('안내', '검색어 또는 회원등급을 선택해주세요.');
       return;
     }
   };
@@ -289,12 +286,6 @@ const MemberManagePage = () => {
             onOpenChange={setIsAddMemberModalOpen}
             handleSearchClick={() => {}}
           />
-          <BaseModal
-            open={isBaseModalOpen}
-            onOpenChange={setIsBaseModalOpen}
-            title='안내'
-            children={<div className='text-center'>{baseModalContent}</div>}
-          />
         </div>
         {/* 테이블 영역 */}
         {isLoading ? (
@@ -306,7 +297,7 @@ const MemberManagePage = () => {
             data={tableData}
             totalCount={totalCount}
             currentPage={currentPage}
-            pageSize={pageSize}
+            pageSize={PAGE_SIZE}
             onPageChange={handlePageChange}
             selectedItems={selectedItems}
             onSelectionChange={handleSelectionChange}

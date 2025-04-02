@@ -10,7 +10,6 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowUpDown } from 'lucide-react';
 import PaginationBox from '@/common/components/ui/pagination/Pagination';
-// import { Pagination } from '@/components/ui/pagination';
 
 interface Column<T> {
   key: keyof T | string;
