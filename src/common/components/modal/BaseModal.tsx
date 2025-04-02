@@ -14,7 +14,7 @@ const BaseModal = ({ description }: BaseModalProps) => {
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className='text-center whitespace-pre-line'>{description}</div>
+        <div className='whitespace-pre-line text-center'>{description}</div>
       </DialogContent>
     </Dialog>
   );
