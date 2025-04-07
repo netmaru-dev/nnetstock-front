@@ -43,3 +43,18 @@ export type AccountTableType = {
   // 상태
   status: string;
 };
+
+export type BoardTableType = {
+  // 번호
+  no: number;
+  // 게시판명
+  title: string;
+  // 게시판 ID
+  boardId: string;
+  // 작성 권한
+  writeAccess: string;
+  // 읽기 권한
+  readAccess: string;
+  // 상태
+  status: string;
+};
