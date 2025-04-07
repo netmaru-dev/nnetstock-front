@@ -14,9 +14,15 @@ import {
 import { useState } from 'react';
 
 const exampleData: SitePageTableType[] = [
-  { id: 1, pageName: '라이선스 소개', lastEditDate: '2025-03-06', status: true },
-  { id: 2, pageName: '청소년 보호정책', lastEditDate: '2025-03-06', status: false },
-  { id: 3, pageName: '이용 약관', lastEditDate: '2025-03-06', status: true },
+  { no: 1, title: '라이선스 소개', lastDate: '2025-03-06', status: 'true', pageId: 'license' },
+  {
+    no: 2,
+    title: '청소년 보호정책',
+    lastDate: '2025-03-06',
+    status: 'false',
+    pageId: 'youth-policy',
+  },
+  { no: 3, title: '이용 약관', lastDate: '2025-03-06', status: 'true', pageId: 'terms' },
 ];
 
 // 상태 변경용 래퍼 컴포넌트
@@ -25,7 +31,7 @@ const StoryWrapper = () => {
 
   const handleStatusChange = (rowIndex: number, newStatus: boolean) => {
     const newData = [...tableData];
-    newData[rowIndex].status = newStatus;
+    newData[rowIndex].status = newStatus ? 'true' : 'false';
     setTableData(newData);
   };
 

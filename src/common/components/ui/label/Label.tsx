@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
 interface LabelProps {
-  htmlFor: string;
   text: string;
+  htmlFor?: string;
   icon?: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
   className?: string;

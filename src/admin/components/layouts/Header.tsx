@@ -1,6 +1,5 @@
 import Logo from '@/common/components/ui/logo/Logo';
 import MenuList from '../common/menu/menuList/MenuList';
-import ModeList from '../common/menu/modeList/ModeList';
 import PersonalMenuList from '../common/menu/personalMenuList/PersonalMenuList';
 
 const Header = () => {

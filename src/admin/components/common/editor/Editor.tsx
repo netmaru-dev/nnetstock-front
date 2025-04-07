@@ -71,7 +71,7 @@ const Editor = ({ value, onChange, className }: EditorProps) => {
         ['link'],
       ],
       handlers: {
-        // image: imageHandler,
+        image: imageHandler,
       },
     },
     // TODO FIXME 이미지 사이즈조절로 인한 삭제 불가능한 버그로 주석처리

@@ -119,7 +119,7 @@ const StepPaginatedTable = <TData, TValue>({
       </div>
       <div className='flex items-center justify-end py-4 space-x-2'>
         <Button
-          variant='default'
+          variant='secondary'
           size='lg'
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
@@ -127,7 +127,7 @@ const StepPaginatedTable = <TData, TValue>({
           이전
         </Button>
         <Button
-          variant='default'
+          variant='secondary'
           size='lg'
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}

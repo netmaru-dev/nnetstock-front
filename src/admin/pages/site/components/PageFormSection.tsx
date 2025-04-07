@@ -1,6 +1,6 @@
 import InputWithLabel from '@/common/components/ui/input/inputWithLabel/InputWithLabel';
 import TextItem from '@/common/components/ui/textItem/TextItem';
-import SelectBox from '@/common/components/ui/select/SelectBox';
+import SelectBox from '@/common/components/ui/select/selectBox/SelectBox';
 import { GoDotFill } from 'react-icons/go';
 import { convertOnlyEnglish, convertOnlyText } from '@/common/utils/convertString';
 
@@ -34,7 +34,7 @@ const PageFormSection = ({
   };
 
   return (
-    <div className='flex flex-col w-full max-w-2xl'>
+    <div className='flex w-full max-w-2xl flex-col'>
       <InputWithLabel
         label='페이지 제목'
         id='page-title'
@@ -54,8 +54,8 @@ const PageFormSection = ({
         className='min-w-[160px]'
       />
       {mode === 'edit' && (
-        <div className='flex flex-col w-full'>
-          <div className='flex items-center h-10'>
+        <div className='flex w-full flex-col'>
+          <div className='flex h-10 items-center'>
             <div className='flex w-40 min-w-[100px] items-start'>
               <TextItem label='버전' size='big' icon={<GoDotFill />} />
             </div>
