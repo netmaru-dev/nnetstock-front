@@ -17,4 +17,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  base: '/stock_front/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true,
+  },
 });
