@@ -1,7 +1,7 @@
 import MasterTable from '@/admin/components/common/table/MasterTable';
 import TitleTextItem from '@/common/components/ui/textItem/TitleTextItem';
 import { UserTableType } from '@/admin/types/TableType';
-import SelectBox from '@/common/components/ui/select/SelectBox';
+import SelectBox from '@/common/components/ui/select/selectBox/SelectBox';
 import InputWithButton from '@/common/components/ui/input/inputWithButton/InputWithButton';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';

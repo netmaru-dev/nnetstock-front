@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import TitleTextItem from '@/common/components/ui/textItem/TitleTextItem';
-import SelectBox from '@/common/components/ui/select/SelectBox';
+import SelectBox from '@/common/components/ui/select/selectBox/SelectBox';
 import { STATUS, STATUS_LABEL } from '@/admin/constants/common';
 import { usePages, useUpdatePageStatus } from '@/admin/hooks/queries/useSiteQueries';
 import Loading from '@/common/components/ui/loading/Loading';
@@ -73,7 +73,6 @@ const PageManagePage = () => {
   const Columns: ColumnDef<SitePageTableType>[] = [
     {
       accessorKey: 'no',
-      enableResizing: true,
       size: 100,
       header: ({ column }) => {
         return (
@@ -82,22 +81,22 @@ const PageManagePage = () => {
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             No.
-            <ArrowUpDown className='w-4 h-4 ml-2' />
+            <ArrowUpDown className='ml-2 h-4 w-4' />
           </Button>
         );
       },
-      cell: ({ row }) => <div className=''>{row.getValue('no')}</div>,
+      // cell: ({ row }) => <div className=''>{row.getValue('no')}</div>,
     },
     {
       accessorKey: 'title',
       header: '페이지명',
       size: 500,
-      cell: ({ row }) => <div className=''>{row.getValue('title')}</div>,
+      // cell: ({ row }) => <div className=''>{row.getValue('title')}</div>,
     },
     {
       accessorKey: 'lastDate',
       header: '최종 작성일',
-      cell: ({ row }) => <div>{row.getValue('lastDate')}</div>,
+      // cell: ({ row }) => <div>{row.getValue('lastDate')}</div>,
     },
     {
       accessorKey: 'status',
@@ -143,14 +142,15 @@ const PageManagePage = () => {
 
   return (
     <div className='flex flex-col gap-10'>
-      <div className='flex justify-between'>
-        <TitleTextItem label='페이지 관리' />
-        <Button onClick={() => navigate('/admin/site/page-manage/new')} size='lg'>
-          새 페이지
-        </Button>
-      </div>
-      <div className='flex flex-col'>
-        <StepPaginatedTable columns={Columns} data={tableData} filter={'title'} />
+      <TitleTextItem label='페이지 관리' />
+      <div className='flex flex-col gap-5'>
+        <div className='flex justify-end'>
+          <Button onClick={() => navigate('/admin/site/page-manage/new')} size='lg'>
+            새 페이지
+          </Button>
+        </div>
+        <StepPaginatedTable columns={Columns} data={tableData} />
+        {/* </div> */}
       </div>
     </div>
   );
