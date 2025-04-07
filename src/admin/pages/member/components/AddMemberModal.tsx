@@ -32,7 +32,7 @@ const AddMemberModal = ({
       </DialogTrigger>
       <DialogContent className='sm:max-w-[550px]'>
         <DialogHeader className='pb-4'>
-          <DialogTitle>회원 추가</DialogTitle>
+          <DialogTitle>{triggerText}</DialogTitle>
           {/* <DialogDescription>
           </DialogDescription> */}
         </DialogHeader>
@@ -77,7 +77,7 @@ const AddMemberModal = ({
           </div>
         </div>
         <DialogFooter>
-          <Button type='submit' size='big' className='w-full'>
+          <Button type='submit' size='full'>
             회원 추가
           </Button>
         </DialogFooter>
