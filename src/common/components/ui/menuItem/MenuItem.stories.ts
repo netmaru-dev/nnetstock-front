@@ -12,7 +12,6 @@ const meta = {
     },
     label: { control: 'text' },
     isActive: { control: 'boolean' },
-    onClick: { action: 'clicked' },
   },
   parameters: {
     backgrounds: {

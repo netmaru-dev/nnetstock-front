@@ -10,7 +10,6 @@ const meta = {
     isActive: { control: 'boolean' },
     isPointer: { control: 'boolean' },
     isHover: { control: 'boolean' },
-    onClick: { action: 'clicked' },
   },
   parameters: {
     backgrounds: {
